@@ -21,15 +21,40 @@ const ResumeFormPage = () => {
     jobDescription?: string;
   }>({});
 
+  // Clear errors when user starts typing/selecting
+  const handleJobDescriptionChange = (value: string) => {
+    setJobDescription(value);
+    if (errors.jobDescription && value.trim()) {
+      setErrors(prev => ({ ...prev, jobDescription: undefined }));
+    }
+  };
+
+  const handleFileSelect = (file: File | null) => {
+    setResumeFile(file);
+    if (errors.resume && file) {
+      setErrors(prev => ({ ...prev, resume: undefined }));
+    }
+  };
+
   const validateForm = () => {
     const newErrors: typeof errors = {};
     
+    // Resume validation
     if (!resumeFile) {
-      newErrors.resume = 'Please upload your resume';
+      newErrors.resume = 'Please upload your resume (PDF format only)';
+    } else {
+      if (resumeFile.type !== 'application/pdf') {
+        newErrors.resume = 'Only PDF files are supported';
+      } else if (resumeFile.size > 10 * 1024 * 1024) {
+        newErrors.resume = 'File size must be less than 10MB';
+      }
     }
     
+    // Job description validation
     if (!jobDescription.trim()) {
-      newErrors.jobDescription = 'Please provide the job description';
+      newErrors.jobDescription = 'Job description is required';
+    } else if (jobDescription.trim().length < 50) {
+      newErrors.jobDescription = 'Please provide a more detailed job description (at least 50 characters)';
     }
     
     setErrors(newErrors);
@@ -136,7 +161,7 @@ const ResumeFormPage = () => {
                   Resume File *
                 </Label>
                 <FileUpload
-                  onFileSelect={setResumeFile}
+                  onFileSelect={handleFileSelect}
                   selectedFile={resumeFile}
                   error={errors.resume}
                 />
@@ -150,16 +175,21 @@ const ResumeFormPage = () => {
                 <Textarea
                   id="jobDescription"
                   value={jobDescription}
-                  onChange={(e) => setJobDescription(e.target.value)}
+                  onChange={(e) => handleJobDescriptionChange(e.target.value)}
                   placeholder="Paste the complete job description here..."
                   className={`min-h-[200px] resize-none ${errors.jobDescription ? 'border-danger focus:border-danger' : ''}`}
                 />
                 {errors.jobDescription && (
                   <p className="text-sm text-danger">{errors.jobDescription}</p>
                 )}
-                <p className="text-sm text-muted-foreground">
-                  Include the full job posting including requirements, responsibilities, and qualifications
-                </p>
+                <div className="flex justify-between items-center">
+                  <p className="text-sm text-muted-foreground">
+                    Include the full job posting including requirements, responsibilities, and qualifications
+                  </p>
+                  <span className="text-xs text-muted-foreground">
+                    {jobDescription.length}/50 min
+                  </span>
+                </div>
               </div>
 
               {/* Extra Information */}

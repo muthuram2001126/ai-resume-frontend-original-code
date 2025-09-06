@@ -6,8 +6,8 @@ import { cn } from '@/lib/utils';
 import { Button } from './button';
 
 interface FileUploadProps {
-  onFileSelect: (file: File) => void;
-  selectedFile?: File;
+  onFileSelect: (file: File | null) => void;
+  selectedFile?: File | null;
   error?: string;
   className?: string;
 }
@@ -16,11 +16,25 @@ export const FileUpload = ({ onFileSelect, selectedFile, error, className }: Fil
   const [isDragActive, setIsDragActive] = useState(false);
 
   const onDrop = useCallback(
-    (acceptedFiles: File[]) => {
-      if (acceptedFiles.length > 0) {
-        onFileSelect(acceptedFiles[0]);
-      }
+    (acceptedFiles: File[], rejectedFiles: any[]) => {
       setIsDragActive(false);
+      
+      if (rejectedFiles.length > 0) {
+        // Handle rejected files
+        return;
+      }
+      
+      if (acceptedFiles.length > 0) {
+        const file = acceptedFiles[0];
+        // Additional validation
+        if (file.type !== 'application/pdf') {
+          return;
+        }
+        if (file.size > 10 * 1024 * 1024) { // 10MB limit
+          return;
+        }
+        onFileSelect(file);
+      }
     },
     [onFileSelect]
   );
@@ -37,7 +51,7 @@ export const FileUpload = ({ onFileSelect, selectedFile, error, className }: Fil
   });
 
   const removeFile = () => {
-    onFileSelect(null as any);
+    onFileSelect(null);
   };
 
   return (
