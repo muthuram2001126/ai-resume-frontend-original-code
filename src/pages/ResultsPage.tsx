@@ -175,7 +175,7 @@ const ResultsPage = () => {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
+          <div>
             {/* ATS Score Card */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -184,20 +184,20 @@ const ResultsPage = () => {
               className="lg:col-span-1"
             >
               <Card className="p-8 text-center card-gradient border-border shadow-custom sticky top-8">
-                <h2 className="text-2xl font-bold mb-6">ATS Compatibility</h2>
+                {/*<h2 className="text-2xl font-bold mb-6">ATS Compatibility</h2>*/}
                 
-                <ProgressCircle 
-                  value={resumeData.atsScore} 
-                  size={150}
-                  className="mx-auto mb-6"
-                />
+                {/*<ProgressCircle */}
+                {/*  value={resumeData.atsScore} */}
+                {/*  size={150}*/}
+                {/*  className="mx-auto mb-6"*/}
+                {/*/>*/}
                 
-                <div className={`flex items-center justify-center gap-2 mb-6 ${scoreInfo.color}`}>
-                  <ScoreIcon className="h-5 w-5" />
-                  <p className="text-sm font-medium">
-                    {scoreInfo.message}
-                  </p>
-                </div>
+                {/*<div className={`flex items-center justify-center gap-2 mb-6 ${scoreInfo.color}`}>*/}
+                {/*  <ScoreIcon className="h-5 w-5" />*/}
+                {/*  <p className="text-sm font-medium">*/}
+                {/*    {scoreInfo.message}*/}
+                {/*  </p>*/}
+                {/*</div>*/}
 
                 <div className="space-y-3">
                   <Button
@@ -234,27 +234,27 @@ const ResultsPage = () => {
             </motion.div>
 
             {/* Resume Content */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3 }}
-              className="lg:col-span-2"
-            >
-              <Card className="p-8 card-gradient border-border shadow-custom">
-                <h2 className="text-2xl font-bold mb-6">Resume Preview</h2>
-                
-                <div className="space-y-8">
-                  {renderSection("Header", resumeData.header, "header")}
-                  {renderSection("Professional Summary", resumeData.summary, "summary")}
-                  {renderSection("Experience", resumeData.experience, "experience")}
-                  {renderSection("Education", resumeData.education, "education")}
-                  {renderSection("Skills", resumeData.skills, "skills")}
-                  {renderSection("Projects", resumeData.projects, "projects")}
-                  {renderSection("Achievements", resumeData.achievements, "achievements")}
-                  {renderSection("Certifications", resumeData.certifications, "certifications")}
-                </div>
-              </Card>
-            </motion.div>
+            {/*<motion.div*/}
+            {/*  initial={{ opacity: 0, x: 30 }}*/}
+            {/*  animate={{ opacity: 1, x: 0 }}*/}
+            {/*  transition={{ delay: 0.3 }}*/}
+            {/*  className="lg:col-span-2"*/}
+            {/*>*/}
+              {/*<Card className="p-8 card-gradient border-border shadow-custom">*/}
+              {/*  <h2 className="text-2xl font-bold mb-6">Resume Preview</h2>*/}
+              {/*  */}
+              {/*  <div className="space-y-8">*/}
+              {/*    {renderSection("Header", resumeData.header, "header")}*/}
+              {/*    {renderSection("Professional Summary", resumeData.summary, "summary")}*/}
+              {/*    {renderSection("Experience", resumeData.experience, "experience")}*/}
+              {/*    {renderSection("Education", resumeData.education, "education")}*/}
+              {/*    {renderSection("Skills", resumeData.skills, "skills")}*/}
+              {/*    {renderSection("Projects", resumeData.projects, "projects")}*/}
+              {/*    {renderSection("Achievements", resumeData.achievements, "achievements")}*/}
+              {/*    {renderSection("Certifications", resumeData.certifications, "certifications")}*/}
+              {/*  </div>*/}
+              {/*</Card>*/}
+            {/*</motion.div>*/}
           </div>
         </motion.div>
       </main>

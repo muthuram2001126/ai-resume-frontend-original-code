@@ -1,7 +1,7 @@
 import api from './client';
 
 export interface ResumeRequest {
-  resume: File;
+  resumeFile: File;
   jobDescription: string;
   extraInfo?: string;
 }
@@ -28,24 +28,21 @@ export const resumeApi = {
   // Generate optimized resume
   generateResume: async (data: ResumeRequest): Promise<ResumeResponse> => {
     const formData = new FormData();
-    formData.append('resume', data.resume);
+    formData.append('resumeFile', data.resumeFile);
     formData.append('jobDescription', data.jobDescription);
     if (data.extraInfo) {
       formData.append('extraInfo', data.extraInfo);
     }
 
-    const response = await api.post('/api/resume/generate', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    const response = await api.post('/api/resumes/generate', formData);
 
     return response.data;
   },
 
   // Download generated PDF
-  downloadPdf: async (pdfPath: string): Promise<Blob> => {
-    const response = await api.get(`/api/resume/download/${pdfPath}`, {
+  downloadPdf: async (): Promise<Blob> => {
+    const latestFileName= await  api.get(`/api/resumes/latest-filename`);
+    const response = await api.get(`/api/resumes/download/${latestFileName.data}`, {
       responseType: 'blob',
     });
 

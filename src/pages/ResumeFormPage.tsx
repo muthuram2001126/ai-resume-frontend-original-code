@@ -42,13 +42,14 @@ const ResumeFormPage = () => {
     // Resume validation
     if (!resumeFile) {
       newErrors.resume = 'Please upload your resume (PDF format only)';
-    } else {
-      if (resumeFile.type !== 'application/pdf') {
-        newErrors.resume = 'Only PDF files are supported';
-      } else if (resumeFile.size > 10 * 1024 * 1024) {
-        newErrors.resume = 'File size must be less than 10MB';
-      }
     }
+    // else {
+    //   if (resumeFile.type !== 'multipart/form-data') {
+    //     newErrors.resume = 'Only PDF files are supported';
+    //   } else if (resumeFile.size > 10 * 1024 * 1024) {
+    //     newErrors.resume = 'File size must be less than 10MB';
+    //   }
+    // }
     
     // Job description validation
     if (!jobDescription.trim()) {
@@ -77,7 +78,7 @@ const ResumeFormPage = () => {
     
     try {
       const response = await resumeApi.generateResume({
-        resume: resumeFile!,
+        resumeFile: resumeFile!,
         jobDescription,
         extraInfo: extraInfo.trim() || undefined,
       });
