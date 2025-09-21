@@ -5,6 +5,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  base: '/ai-resume-frontend-original-code/',   // <--- important
   server: {
     host: "::",
     port: 8080,
