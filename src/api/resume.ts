@@ -34,6 +34,10 @@ export const resumeApi = {
       formData.append('extraInfo', data.extraInfo);
     }
 
+    for (let pair of formData.entries()) {
+      console.log(pair[0]+ ':', pair[1]);
+    }
+
     const response = await api.post('/api/resumes/generate', formData);
 
     return response.data;
